@@ -10,6 +10,10 @@ Categories.init(
     },
     description: {
       type: Sequelize.STRING
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
     }
   },
   {
