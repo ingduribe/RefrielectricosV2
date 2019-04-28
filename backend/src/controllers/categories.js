@@ -1,7 +1,6 @@
 const categoriesController = {};
 const validator = require("../middlewares/categories-validations");
 const Categories = require("./../model/categories");
-const { sequelize } = require("./../config/db");
 
 //Create cetegory
 categoriesController.addCategory = async (req, res) => {
@@ -24,12 +23,9 @@ categoriesController.addCategory = async (req, res) => {
       description
     };
     await Categories.create(newCategory);
-
     res.json("Created");
   } catch (err) {
     console.log(err);
-  } finally {
-    await sequelize.close();
   }
 };
 
@@ -55,8 +51,6 @@ categoriesController.changeStatus = async (req, res) => {
     res.json(`Status changed`);
   } catch (err) {
     console.log(err);
-  } finally {
-    await sequelize.close();
   }
 };
 
@@ -83,9 +77,36 @@ categoriesController.updateCategory = async (req, res) => {
     await Categories.update({ name, description }, { where: { id } });
     res.json(`Category updated`);
   } catch (error) {
-    console.log(err);
-  } finally {
-    await sequelize.close();
+    console.log(error);
+  }
+};
+
+categoriesController.getActiveCategories = async (req, res) => {
+  try {
+    const activeCategories = await Categories.findAll({ where: { active: 1 } });
+    res.json(activeCategories);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+categoriesController.getInactiveCategories = async (req, res) => {
+  try {
+    const inactiveCategories = await Categories.findAll({
+      where: { active: 0 }
+    });
+    res.json(inactiveCategories);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+categoriesController.getAllCategories = async (req, res) => {
+  try {
+    const allCategories = await Categories.findAll();
+    res.json(allCategories);
+  } catch (error) {
+    console.log(error);
   }
 };
 

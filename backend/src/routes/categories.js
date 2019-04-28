@@ -19,9 +19,19 @@ router.put(
 );
 
 //Endpoint to update a category
-module.exports = router;
 router.put(
   "/update/:id",
   validator.updateValidator(check),
   categoriesController.updateCategory
 );
+
+//Endpoint to get active categories
+router.get("/", categoriesController.getActiveCategories);
+
+//Endpoint to get inactive categories
+router.get("/inactive", categoriesController.getInactiveCategories);
+
+//Endpoint to get all categories
+router.get("/all", categoriesController.getAllCategories);
+
+module.exports = router;
