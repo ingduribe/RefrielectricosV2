@@ -1,7 +1,31 @@
 const { validationResult } = require("express-validator/check");
 
 //Function to validate de fields title and description
-const validateCategories = check => {
+const createValidator = check => {
+  return [
+    check("name")
+      .not()
+      .isEmpty()
+      .withMessage("The category name is required")
+      .isLength({ max: 30 })
+      .withMessage("The title of the task can not be more than 30 characters"),
+    check("description")
+      .not()
+      .isEmpty()
+      .withMessage("The category description is required")
+  ];
+};
+
+const changeStatusValidator = check => {
+  return [
+    check("active")
+      .not()
+      .isEmpty()
+      .withMessage("Category status is required")
+  ];
+};
+
+const updateValidator = check => {
   return [
     check("name")
       .not()
@@ -22,4 +46,9 @@ const validatorErrors = req => {
 };
 
 //Export functions to validate an errors founds
-module.exports = { validateCategories, validatorErrors };
+module.exports = {
+  createValidator,
+  changeStatusValidator,
+  updateValidator,
+  validatorErrors
+};

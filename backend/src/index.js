@@ -15,6 +15,6 @@ for (let envVar of requiredEnv) {
     console.log("Connection has been established successfully.");
     require("./server");
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    console.error(error);
   }
 })();

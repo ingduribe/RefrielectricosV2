@@ -10,6 +10,17 @@ Products.init(
     },
     description: {
       type: Sequelize.STRING
+    },
+    price: {
+      type: Sequelize.INTEGER
+    },
+    showPrice: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
     }
   },
   {
