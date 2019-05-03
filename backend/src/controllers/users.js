@@ -1,19 +1,8 @@
 const usersController = {};
 const validator = require("../middlewares/user-validations");
-const Users = require("./../model/users");
-const bcrypt = require("bcrypt");
-const { SALTROUNDS } = process.env;
+const passport = require("passport");
 
-const cryptPassword = async password => {
-  try {
-    const hash = await bcrypt.hash(password, parseInt(SALTROUNDS));
-    return hash;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-usersController.addUser = async (req, res) => {
+usersController.createUser = (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -27,11 +16,10 @@ usersController.addUser = async (req, res) => {
       };
       res.json(response);
     }
-    let { name, lastName, usernameLogin, passwordLogin, rolType } = req.body;
-    passwordLogin = await cryptPassword(passwordLogin);
-    const newUser = { name, lastName, usernameLogin, passwordLogin, rolType };
-    await Users.create(newUser);
-    res.json("User created");
+    passport.authenticate("local", async (err, user, msg) => {
+      if (err) throw new Error("Error with create user", err);
+      await res.json({ user, msg });
+    })(req, res);
   } catch (error) {
     console.log(error);
   }

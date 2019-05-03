@@ -4,34 +4,34 @@ const categoriesController = require("./../controllers/categories");
 const { check } = require("express-validator/check");
 const validator = require("../middlewares/categories-validations");
 
-//Endpoint to create a category
-router.post(
-  "/",
-  validator.createValidator(check),
-  categoriesController.addCategory
-);
+module.exports = app => {
+  //Endpoint to create a category
+  app.post(
+    "/categories/",
+    validator.createValidator(check),
+    categoriesController.addCategory
+  );
 
-//Endpoint to inactive a category
-router.put(
-  "/changeStatus/:id",
-  validator.changeStatusValidator(check),
-  categoriesController.changeStatus
-);
+  //Endpoint to inactive a category
+  app.put(
+    "/categories/changeStatus/:id",
+    validator.changeStatusValidator(check),
+    categoriesController.changeStatus
+  );
 
-//Endpoint to update a category
-router.put(
-  "/update/:id",
-  validator.updateValidator(check),
-  categoriesController.updateCategory
-);
+  //Endpoint to update a category
+  app.put(
+    "/categories/update/:id",
+    validator.updateValidator(check),
+    categoriesController.updateCategory
+  );
 
-//Endpoint to get active categories
-router.get("/", categoriesController.getActiveCategories);
+  //Endpoint to get active categories
+  app.get("/categories/", categoriesController.getActiveCategories);
 
-//Endpoint to get inactive categories
-router.get("/inactive", categoriesController.getInactiveCategories);
+  //Endpoint to get inactive categories
+  app.get("/categories/inactive", categoriesController.getInactiveCategories);
 
-//Endpoint to get all categories
-router.get("/all", categoriesController.getAllCategories);
-
-module.exports = router;
+  //Endpoint to get all categories
+  app.get("/categories/all", categoriesController.getAllCategories);
+};
