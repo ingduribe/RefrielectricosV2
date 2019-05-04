@@ -17,6 +17,7 @@ app.use(passport.session());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+strategies.create(passport);
 strategies.login(passport);
 
 app.use("/categories", categoryRoutes);
