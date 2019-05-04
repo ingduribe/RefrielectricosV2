@@ -1,4 +1,3 @@
-//Importing the controller of tasks, validations and router
 const { check } = require("express-validator/check");
 const validator = require("../middlewares/user-validations");
 const userController = require("../controllers/users");

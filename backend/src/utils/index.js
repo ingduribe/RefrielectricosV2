@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const { SALTROUNDS, SECRET } = process.env;
 const jwt = require("jsonwebtoken");
+var moment = require("moment");
 
 const cryptPassword = async password =>
   await bcrypt.hash(password, parseInt(SALTROUNDS));
@@ -9,23 +10,19 @@ const comparePassword = async (password, passwordHash) =>
   await bcrypt.compare(password, passwordHash);
 
 const generateJWT = (userId, usernameLogin, rolType) => {
-  try {
-  } catch (error) {
-    console.log;
-  }
-  const today = new Date();
-  const expirationDate = new Date(today);
-  expirationDate.setDate(today.getDate() + 60);
-
   let payload = {
     id: userId,
     username: usernameLogin,
-    rol: rolType
+    rol: rolType,
+    iat: moment().unix(),
+    exp: moment()
+      .add(1, "days")
+      .unix()
   };
 
-  return jwt.sign(payload, SECRET, { expiresIn: "2h" });
+  return jwt.sign(payload, SECRET);
 };
 
-const validateJWT = token => jwt.verify(token, SECRET);
+const decodeJWT = token => jwt.decode(token, SECRET);
 
-module.exports = { cryptPassword, comparePassword, generateJWT, validateJWT };
+module.exports = { cryptPassword, comparePassword, generateJWT, decodeJWT };
