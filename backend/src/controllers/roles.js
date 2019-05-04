@@ -1,9 +1,8 @@
-const categoriesController = {};
-const validator = require("../middlewares/categoriesValidations");
-const Categories = require("./../model/categories");
+const rolController = {};
+const validator = require("../middlewares/rolValidations");
+const Roles = require("../model/roles");
 
-//Create cetegory
-categoriesController.addCategory = async (req, res) => {
+rolController.addRol = async (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -18,19 +17,16 @@ categoriesController.addCategory = async (req, res) => {
       res.json(response);
     }
     const { name, description } = req.body;
-    const newCategory = {
-      name,
-      description
-    };
-    await Categories.create(newCategory);
-    res.json("Created");
-  } catch (err) {
-    console.log(err);
+    const newRol = { name, description };
+    await Roles.create(newRol);
+
+    res.json("New rol created");
+  } catch (error) {
+    console.log(error);
   }
 };
 
-//Change status category
-categoriesController.changeStatus = async (req, res) => {
+rolController.changeStatus = async (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -44,18 +40,18 @@ categoriesController.changeStatus = async (req, res) => {
       };
       res.json(response);
     }
+
     const { active } = req.body;
     const { id } = req.params;
 
-    await Categories.update({ active }, { where: { id } });
+    await Roles.update({ active }, { where: { id } });
     res.json(`Status changed`);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
-//Update category
-categoriesController.updateCategory = async (req, res) => {
+rolController.updateRol = async (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -72,40 +68,40 @@ categoriesController.updateCategory = async (req, res) => {
     const { name, description } = req.body;
     const { id } = req.params;
 
-    await Categories.update({ name, description }, { where: { id } });
-    res.json(`Category updated`);
+    await Roles.update({ name, description }, { where: { id } });
+    res.json(`Rol updated`);
   } catch (error) {
     console.log(error);
   }
 };
 
-categoriesController.getActiveCategories = async (req, res) => {
+rolController.getActiveRoles = async (req, res) => {
   try {
-    const activeCategories = await Categories.findAll({ where: { active: 1 } });
-    res.json(activeCategories);
+    const activeRoles = await Roles.findAll({ where: { active: 1 } });
+    res.json(activeRoles);
   } catch (error) {
     console.log(error);
   }
 };
 
-categoriesController.getInactiveCategories = async (req, res) => {
+rolController.getInactiveRoles = async (req, res) => {
   try {
-    const inactiveCategories = await Categories.findAll({
+    const inactiveRoles = await Roles.findAll({
       where: { active: 0 }
     });
-    res.json(inactiveCategories);
+    res.json(inactiveRoles);
   } catch (error) {
     console.log(error);
   }
 };
 
-categoriesController.getAllCategories = async (req, res) => {
+rolController.getAllRoles = async (req, res) => {
   try {
-    const allCategories = await Categories.findAll();
-    res.json(allCategories);
+    const allRoles = await Roles.findAll();
+    res.json(allRoles);
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = categoriesController;
+module.exports = rolController;

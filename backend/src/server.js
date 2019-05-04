@@ -5,6 +5,8 @@ const passport = require("passport");
 const session = require("express-session");
 const categoryRoutes = require("./routes/categories");
 const userRoutes = require("./routes/users");
+const productsRoutes = require("./routes/products");
+const rolRoutes = require("./routes/roles");
 const strategies = require("./middlewares/auth/authStrategies");
 
 const app = express();
@@ -22,6 +24,8 @@ strategies.login(passport);
 
 app.use("/categories", categoryRoutes);
 app.use("/users", userRoutes);
+app.use("/products", productsRoutes);
+app.use("/roles", rolRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server on port ${PORT}`);

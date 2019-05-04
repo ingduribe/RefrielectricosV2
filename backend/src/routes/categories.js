@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const categoriesController = require("./../controllers/categories");
 const { check } = require("express-validator/check");
-const validator = require("../middlewares/categories-validations");
+const validator = require("../middlewares/categoriesValidations");
 const { isAuth } = require("../middlewares/auth/checkAuth");
 
 //Endpoint to create a category

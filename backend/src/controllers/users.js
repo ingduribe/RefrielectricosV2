@@ -1,5 +1,5 @@
 const usersController = {};
-const validator = require("../middlewares/user-validations");
+const validator = require("../middlewares/userValidations");
 const passport = require("passport");
 
 usersController.createUser = (req, res) => {
