@@ -6,9 +6,7 @@ const createValidator = check => {
     check("name")
       .not()
       .isEmpty()
-      .withMessage("The category name is required")
-      .isLength({ max: 30 })
-      .withMessage("The title of the task can not be more than 30 characters"),
+      .withMessage("The category name is required"),
     check("description")
       .not()
       .isEmpty()

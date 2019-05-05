@@ -3,6 +3,7 @@ const categoriesController = require("./../controllers/categories");
 const { check } = require("express-validator/check");
 const validator = require("../middlewares/categoriesValidations");
 const { isAuth } = require("../middlewares/auth/checkAuth");
+const { isAuthJWT } = require("../middlewares/auth/checkJWTAuth");
 
 //Endpoint to create a category
 router.post(
@@ -29,7 +30,7 @@ router.put(
 );
 
 //Endpoint to get active categories
-router.get("/", isAuth, categoriesController.getActiveCategories);
+router.get("/", categoriesController.getActiveCategories);
 
 //Endpoint to get inactive categories
 router.get("/inactive", isAuth, categoriesController.getInactiveCategories);

@@ -3,14 +3,18 @@ const Categories = require("./categories");
 const Users = require("./users");
 const Roles = require("./roles");
 const Features = require("./features");
+const rolesManager = require("./rolesManager");
 
 (async () => {
-  await Features.belongsTo(Roles, { foreignKey: "idRol" });
   await Products.belongsTo(Categories, { foreignKey: "idCategory" });
+
+  await Features.belongsToMany(Roles, { through: "rolesManager" });
+  await Roles.belongsToMany(Features, { through: "rolesManager" });
 
   await Roles.sync();
   await Features.sync();
   await Categories.sync();
   await Products.sync();
   await Users.sync();
+  await rolesManager.sync();
 })();

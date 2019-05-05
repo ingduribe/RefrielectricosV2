@@ -9,9 +9,9 @@ const cryptPassword = async password =>
 const comparePassword = async (password, passwordHash) =>
   await bcrypt.compare(password, passwordHash);
 
-const generateJWT = (userId, usernameLogin, rolType) => {
+const generateJWT = (uuidNumber, usernameLogin, rolType) => {
   let payload = {
-    id: userId,
+    id: uuidNumber,
     username: usernameLogin,
     rol: rolType,
     iat: moment().unix(),

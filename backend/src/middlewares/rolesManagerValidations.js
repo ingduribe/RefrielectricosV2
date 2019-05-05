@@ -1,20 +1,16 @@
 const { validationResult } = require("express-validator/check");
 
 //Function to validate de fields title and description
-const createValidator = check => {
+const manageRolValidator = check => {
   return [
-    check("name")
+    check("featureId")
       .not()
       .isEmpty()
-      .withMessage("The product name is required"),
-    check("description")
+      .withMessage("The feature is required"),
+    check("roleId")
       .not()
       .isEmpty()
-      .withMessage("The product description is required"),
-    check("idCategory")
-      .not()
-      .isEmpty()
-      .withMessage("The product category is required")
+      .withMessage("The rol is required")
   ];
 };
 
@@ -25,6 +21,6 @@ const validatorErrors = req => {
 
 //Export functions to validate an errors founds
 module.exports = {
-  createValidator,
+  manageRolValidator,
   validatorErrors
 };

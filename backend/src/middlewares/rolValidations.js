@@ -6,9 +6,11 @@ const createOrUpdateValidator = check => {
     check("name")
       .not()
       .isEmpty()
-      .withMessage("The rol name is required")
-      .isLength({ max: 30 })
-      .withMessage("The title of the task can not be more than 30 characters")
+      .withMessage("The rol name is required"),
+    check("description")
+      .not()
+      .isEmpty()
+      .withMessage("The role description is required")
   ];
 };
 

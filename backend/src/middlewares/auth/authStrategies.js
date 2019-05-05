@@ -56,7 +56,11 @@ exports.login = passport => {
 
           if (!matchPassword) return done(null, false, "Invalid password");
 
-          let token = generateJWT(user.id, user.usernameLogin, user.rolType);
+          let token = generateJWT(
+            user.uuidNumber,
+            user.usernameLogin,
+            user.rolType
+          );
 
           return done(null, true, {
             token
