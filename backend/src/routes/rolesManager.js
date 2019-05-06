@@ -4,6 +4,8 @@ const rolManagerController = require("../controllers/rolesManager");
 const router = require("express").Router();
 const { isAuth } = require("../middlewares/auth/checkAuth");
 
+router.get("/:roleId", isAuth, rolManagerController.getFeaturesByRol);
+
 router.post(
   "/asignFeatureToRol",
   isAuth,

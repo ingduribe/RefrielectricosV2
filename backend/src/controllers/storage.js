@@ -1,8 +1,8 @@
-const productsController = {};
-const validator = require("../middlewares/productsValidations");
-const Products = require("./../model/products");
+const storageController = {};
+const validator = require("../middlewares/storageValidations");
+const Storage = require("./../model/storage");
 
-productsController.addProducts = async (req, res) => {
+storageController.addImage = async (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -16,21 +16,20 @@ productsController.addProducts = async (req, res) => {
       };
       res.json(response);
     }
-
-    const { name, description, idCategory } = req.body;
-    const newProduct = {
-      name,
+    const { description, fileName, base64 } = req.body;
+    const newImage = {
       description,
-      idCategory
+      fileName,
+      base64
     };
-    await Products.create(newProduct);
-    res.json("Created");
-  } catch (error) {
-    console.log(error);
+    await Storage.create(newImage);
+    res.json("Image uploaded");
+  } catch (err) {
+    console.log(err);
   }
 };
 
-productsController.changeStatus = async (req, res) => {
+storageController.changeStatus = async (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -45,16 +44,16 @@ productsController.changeStatus = async (req, res) => {
       res.json(response);
     }
     const { active } = req.body;
-    const { id } = req.params;
+    const { uuidCode } = req.params;
 
-    await Products.update({ active }, { where: { id } });
+    await Storage.update({ active }, { where: { uuidCode } });
     res.json(`Status changed`);
   } catch (err) {
     console.log(err);
   }
 };
 
-productsController.updateProduct = async (req, res) => {
+storageController.updateSImage = async (req, res) => {
   try {
     const errors = validator.validatorErrors(req);
     if (errors.length) {
@@ -68,43 +67,46 @@ productsController.updateProduct = async (req, res) => {
       };
       res.json(response);
     }
-    const { name, description, idCategory } = req.body;
-    const { id } = req.params;
+    const { description, fileName, base64 } = req.body;
+    const { uuidCode } = req.params;
 
-    await Products.update({ name, description, idCategory }, { where: { id } });
-    res.json(`Product updated`);
+    await Storage.update(
+      { description, fileName, base64 },
+      { where: { uuidCode } }
+    );
+    res.json(`Image updated`);
   } catch (error) {
     console.log(error);
   }
 };
 
-productsController.getActiveProduct = async (req, res) => {
+storageController.getActiveImages = async (req, res) => {
   try {
-    const activeProducts = await Products.findAll({ where: { active: 1 } });
-    res.json(activeProducts);
+    const activeImages = await Storage.findAll({ where: { active: 1 } });
+    res.json(activeImages);
   } catch (error) {
     console.log(error);
   }
 };
 
-productsController.getInactiveProduct = async (req, res) => {
+storageController.getInactiveImages = async (req, res) => {
   try {
-    const inactiveProducts = await Products.findAll({
+    const inactiveImages = await Storage.findAll({
       where: { active: 0 }
     });
-    res.json(inactiveProducts);
+    res.json(inactiveImages);
   } catch (error) {
     console.log(error);
   }
 };
 
-productsController.getAllProduct = async (req, res) => {
+storageController.getAllImages = async (req, res) => {
   try {
-    const allProducts = await Products.findAll();
-    res.json(allProducts);
+    const allImages = await Storage.findAll();
+    res.json(allImages);
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = productsController;
+module.exports = storageController;

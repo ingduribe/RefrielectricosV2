@@ -9,6 +9,7 @@ const productsRoutes = require("./routes/products");
 const rolRoutes = require("./routes/roles");
 const featureRoutes = require("./routes/features");
 const rolesManagerRouter = require("./routes/rolesManager");
+const storageRouter = require("./routes/storage");
 const strategies = require("./middlewares/auth/authStrategies");
 
 const app = express();
@@ -30,6 +31,7 @@ app.use("/products", productsRoutes);
 app.use("/roles", rolRoutes);
 app.use("/features", featureRoutes);
 app.use("/rolesManager", rolesManagerRouter);
+app.use("/storage", storageRouter);
 
 app.listen(PORT, () => {
   console.log(`Server on port ${PORT}`);

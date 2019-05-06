@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const categoriesController = require("./../controllers/categories");
+const storageController = require("./../controllers/storage");
 const { check } = require("express-validator/check");
-const validator = require("../middlewares/categoriesValidations");
+const validator = require("../middlewares/storageValidations");
 const { isAuth } = require("../middlewares/auth/checkAuth");
 
 //Endpoint to create a category
@@ -9,7 +9,7 @@ router.post(
   "/",
   isAuth,
   validator.createValidator(check),
-  categoriesController.addCategory
+  storageController.addImage
 );
 
 //Endpoint to inactive a category
@@ -17,7 +17,7 @@ router.put(
   "/changeStatus/:id",
   isAuth,
   validator.changeStatusValidator(check),
-  categoriesController.changeStatus
+  storageController.changeStatus
 );
 
 //Endpoint to update a category
@@ -25,16 +25,16 @@ router.put(
   "/update/:id",
   isAuth,
   validator.updateValidator(check),
-  categoriesController.updateCategory
+  storageController.updateSImage
 );
 
 //Endpoint to get active categories
-router.get("/", categoriesController.getActiveCategories);
+router.get("/", storageController.getActiveImages);
 
 //Endpoint to get inactive categories
-router.get("/inactive", isAuth, categoriesController.getInactiveCategories);
+router.get("/inactive", isAuth, storageController.getInactiveImages);
 
 //Endpoint to get all categories
-router.get("/all", isAuth, categoriesController.getAllCategories);
+router.get("/all", isAuth, storageController.getAllImages);
 
 module.exports = router;

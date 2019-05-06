@@ -1,6 +1,8 @@
 const rolesManagerController = {};
 const validator = require("../middlewares/rolesManagerValidations");
 const RolesManager = require("./../model/rolesManager");
+const Features = require("../model/features");
+const Roles = require("../model/roles");
 
 rolesManagerController.asignFeatureToRol = async (req, res) => {
   try {
@@ -47,6 +49,25 @@ rolesManagerController.removeFeatureFromRol = async (req, res) => {
 
     await RolesManager.destroy({ where: { featureId, roleId } });
     res.json("Feature was deleted from role");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+rolesManagerController.getFeaturesByRol = async (req, res) => {
+  try {
+    const { roleId } = req.params;
+
+    const features = await Roles.findAll({
+      where: { id: roleId },
+      include: {
+        model: Features,
+        through: { attributes: [] },
+        attributes: ["name", "description"]
+      }
+    });
+
+    res.json(features);
   } catch (error) {
     console.log(error);
   }

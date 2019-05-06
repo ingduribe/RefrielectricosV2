@@ -3,18 +3,18 @@ const { validationResult } = require("express-validator/check");
 //Function to validate de fields title and description
 const createValidator = check => {
   return [
-    check("name")
-      .not()
-      .isEmpty()
-      .withMessage("The product name is required"),
     check("description")
       .not()
       .isEmpty()
-      .withMessage("The product description is required"),
-    check("idCategory")
+      .withMessage("The image description is required"),
+    check("fileName")
       .not()
       .isEmpty()
-      .withMessage("The product category is required")
+      .withMessage("The image filename is required"),
+    check("base64")
+      .not()
+      .isEmpty()
+      .withMessage("The image is required")
   ];
 };
 
@@ -29,18 +29,18 @@ const changeStatusValidator = check => {
 
 const updateValidator = check => {
   return [
-    check("name")
-      .not()
-      .isEmpty()
-      .withMessage("The product name is required"),
     check("description")
       .not()
       .isEmpty()
-      .withMessage("The product description is required"),
-    check("idCategory")
+      .withMessage("The image description is required"),
+    check("fileName")
       .not()
       .isEmpty()
-      .withMessage("The product category is required")
+      .withMessage("The image filename is required"),
+    check("base64")
+      .not()
+      .isEmpty()
+      .withMessage("The image is required")
   ];
 };
 
