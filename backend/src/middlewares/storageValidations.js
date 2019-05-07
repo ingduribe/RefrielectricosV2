@@ -11,7 +11,7 @@ const createValidator = check => {
       .not()
       .isEmpty()
       .withMessage("The image filename is required"),
-    check("base64")
+    check("resource")
       .not()
       .isEmpty()
       .withMessage("The image is required")

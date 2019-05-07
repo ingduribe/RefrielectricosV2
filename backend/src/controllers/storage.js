@@ -16,11 +16,11 @@ storageController.addImage = async (req, res) => {
       };
       res.json(response);
     }
-    const { description, fileName, base64 } = req.body;
+    const { description, fileName, resource } = req.body;
     const newImage = {
       description,
       fileName,
-      base64
+      resource
     };
     await Storage.create(newImage);
     res.json("Image uploaded");
@@ -67,11 +67,11 @@ storageController.updateSImage = async (req, res) => {
       };
       res.json(response);
     }
-    const { description, fileName, base64 } = req.body;
+    const { description, fileName, resource } = req.body;
     const { uuidCode } = req.params;
 
     await Storage.update(
-      { description, fileName, base64 },
+      { description, fileName, resource },
       { where: { uuidCode } }
     );
     res.json(`Image updated`);

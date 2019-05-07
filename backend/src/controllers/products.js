@@ -17,10 +17,13 @@ productsController.addProducts = async (req, res) => {
       res.json(response);
     }
 
-    const { name, description, idCategory } = req.body;
+    const { name, brand, model, description, price, idCategory } = req.body;
     const newProduct = {
       name,
+      brand,
+      model,
       description,
+      price,
       idCategory
     };
     await Products.create(newProduct);

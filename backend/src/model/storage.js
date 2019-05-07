@@ -13,9 +13,9 @@ Storage.init(
       type: Sequelize.STRING
     },
     fileName: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     },
-    base64: {
+    resource: {
       type: Sequelize.TEXT,
       allowNull: false
     },

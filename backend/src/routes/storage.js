@@ -14,7 +14,7 @@ router.post(
 
 //Endpoint to inactive a category
 router.put(
-  "/changeStatus/:id",
+  "/changeStatus/:uuidCode",
   isAuth,
   validator.changeStatusValidator(check),
   storageController.changeStatus

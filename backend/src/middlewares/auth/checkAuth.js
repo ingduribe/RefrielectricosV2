@@ -1,6 +1,7 @@
 const { decodeJWT } = require("../../utils");
 const moment = require("moment");
 const Users = require("../../model/users");
+const { TYPE1 } = process.env;
 
 exports.isAuth = async (req, res, next) => {
   console.log(req.originalUrl);
@@ -17,7 +18,7 @@ exports.isAuth = async (req, res, next) => {
   });
 
   if (exp <= moment().unix()) return res.status(403).json("Expired token");
-  if (rol !== "admin" || !user) {
+  if (rol !== TYPE1 || !user) {
     return res
       .status(403)
       .json(

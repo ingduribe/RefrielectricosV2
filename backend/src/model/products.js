@@ -8,6 +8,12 @@ Products.init(
       type: Sequelize.STRING,
       allowNull: false
     },
+    brand: {
+      type: Sequelize.STRING
+    },
+    model: {
+      type: Sequelize.STRING
+    },
     description: {
       type: Sequelize.STRING
     },
