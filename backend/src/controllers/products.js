@@ -1,6 +1,9 @@
 const productsController = {};
 const validator = require("../middlewares/productsValidations");
 const Products = require("./../model/products");
+const Categories = require("./../model/categories");
+const { Sequelize } = require("../config/db");
+const Operator = Sequelize.Op;
 
 productsController.addProducts = async (req, res) => {
   try {
@@ -105,6 +108,60 @@ productsController.getAllProduct = async (req, res) => {
   try {
     const allProducts = await Products.findAll();
     res.json(allProducts);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+productsController.getProductsByCategory = async (req, res) => {
+  try {
+    const productsByCategory = await Products.findAll({
+      where: { idCategory: req.params.idCategory, active: 1 }
+    });
+    res.json(productsByCategory);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+productsController.getProductsLikeName = async (req, res) => {
+  try {
+    const productsLikeName = await Products.findAll({
+      include: {
+        model: Categories,
+        attributes: ["name", "description"],
+        where: { active: 1 }
+      },
+      where: {
+        name: {
+          [Operator["like"]]: `%${req.params.name}%`
+        },
+        active: 1
+      }
+    });
+
+    res.json(productsLikeName);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+productsController.getProductsByPriceHigher = async (req, res) => {
+  try {
+    const productsPriceHigher = await Products.findAll({
+      include: {
+        model: Categories,
+        attributes: ["name", "description"],
+        where: { active: 1 }
+      },
+      where: {
+        price: {
+          [Operator["gte"]]: req.params.price
+        }
+      }
+    });
+
+    res.json(productsPriceHigher);
   } catch (error) {
     console.log(error);
   }

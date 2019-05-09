@@ -11,4 +11,26 @@ router.post(
   productsController.addProducts
 );
 
+router.put(
+  "/changeStatus/:id",
+  isAuth,
+  validator.changeStatusValidator(check),
+  productsController.changeStatus
+);
+
+router.get("/", productsController.getActiveProduct);
+
+router.get("/inactive", isAuth, productsController.getInactiveProduct);
+
+router.get("/all", isAuth, productsController.getAllProduct);
+
+router.get("/category/:idCategory", productsController.getProductsByCategory);
+
+router.get("/getLikeName/:name", productsController.getProductsLikeName);
+
+router.get(
+  "/getHigherPrice/:price",
+  productsController.getProductsByPriceHigher
+);
+
 module.exports = router;
