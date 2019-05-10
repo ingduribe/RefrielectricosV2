@@ -167,4 +167,46 @@ productsController.getProductsByPriceHigher = async (req, res) => {
   }
 };
 
+productsController.getProductsByPriceLower = async (req, res) => {
+  try {
+    const productsPriceLower = await Products.findAll({
+      include: {
+        model: Categories,
+        attributes: ["name", "description"],
+        where: { active: 1 }
+      },
+      where: {
+        price: {
+          [Operator["lte"]]: req.params.price
+        }
+      }
+    });
+
+    res.json(productsPriceLower);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+productsController.getProductsBetweenPrices = async (req, res) => {
+  try {
+    const productsBeteenPrices = await Products.findAll({
+      include: {
+        model: Categories,
+        attributes: ["name", "description"],
+        where: { active: 1 }
+      },
+      where: {
+        price: {
+          [Operator["between"]]: [req.params.lowerPrice, req.params.higherPrice]
+        }
+      }
+    });
+
+    res.json(productsBeteenPrices);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = productsController;

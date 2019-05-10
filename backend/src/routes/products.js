@@ -33,4 +33,11 @@ router.get(
   productsController.getProductsByPriceHigher
 );
 
+router.get("/getLowerPrice/:price", productsController.getProductsByPriceLower);
+
+router.get(
+  "/getBetweenPrices/:lowerPrice/:higherPrice",
+  productsController.getProductsBetweenPrices
+);
+
 module.exports = router;
