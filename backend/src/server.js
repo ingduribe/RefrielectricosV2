@@ -21,9 +21,11 @@ app.use(passport.session());
 
 app.use(cors());
 app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 strategies.create(passport);
 strategies.login(passport);
+// app.use(formidableMiddleware(options));
 
 app.use("/categories", categoryRoutes);
 app.use("/users", userRoutes);

@@ -6,10 +6,10 @@ const { isAuth } = require("../middlewares/auth/checkAuth");
 
 //Endpoint to create a category
 router.post(
-  "/",
+  "/upload",
   isAuth,
-  validator.createValidator(check),
-  storageController.addImage
+  // validator.createValidator(check),
+  storageController.upload
 );
 
 //Endpoint to inactive a category
@@ -25,7 +25,7 @@ router.put(
   "/update/:id",
   isAuth,
   validator.updateValidator(check),
-  storageController.updateSImage
+  storageController.updateImage
 );
 
 //Endpoint to get active categories
