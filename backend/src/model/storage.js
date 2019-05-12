@@ -25,6 +25,10 @@ Storage.init(
     active: {
       type: Sequelize.BOOLEAN,
       defaultValue: true
+    },
+    inMassiveUpload: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
   },
   {

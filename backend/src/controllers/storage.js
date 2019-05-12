@@ -25,13 +25,78 @@ storageController.upload = (req, res) => {
         const { file } = newImage;
         newImage.resource = file.path;
         newImage.fileName = file.name;
-        if (fs.existsSync(file.path)) {
+        let updates = false;
+
+        let finded = await Storage.findOne({
+          where: { fileName: newImage.fileName }
+        });
+
+        if (finded) {
+          await Storage.update(
+            {
+              newImage
+            },
+            { where: { fileName: newImage.fileName } }
+          );
+          updates = true;
+        } else {
           await Storage.create(newImage);
-          res.json(`${file.name} uploaded`);
         }
+
+        updates
+          ? res.json(`${file.name} uploaded with updates`)
+          : res.json(`${file.name} uploaded`);
       });
   } catch (err) {
     console.log(err);
+  }
+};
+
+storageController.massiveUpload = async (req, res) => {
+  try {
+    let form = new formidable.IncomingForm();
+    var newImage = {};
+    let imagesList = [];
+
+    form
+      .parse(req)
+      .on("fileBegin", (name, file) => {
+        let filePath = path.join(__dirname, "../../uploads", file.name);
+        file.path = filePath;
+        newImage.fileName = file.name;
+        newImage.resource = file.path;
+        newImage.description = "Massive upload";
+        newImage.inMassiveUpload = true;
+
+        imagesList.push(newImage);
+
+        newImage = {};
+      })
+      .on("end", async () => {
+        let updates = false;
+        for (const image of imagesList) {
+          let finded = await Storage.findOne({
+            where: { fileName: image.fileName }
+          });
+
+          if (finded) {
+            await Storage.update(
+              {
+                image
+              },
+              { where: { fileName: image.fileName } }
+            );
+            updates = true;
+          } else {
+            await Storage.create(image);
+          }
+        }
+        updates
+          ? res.json("Massive upload completed with updates")
+          : res.json("Massive upload completed");
+      });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -56,33 +121,6 @@ storageController.changeStatus = async (req, res) => {
     res.json(`Status changed`);
   } catch (err) {
     console.log(err);
-  }
-};
-
-storageController.updateImage = async (req, res) => {
-  try {
-    const errors = validator.validatorErrors(req);
-    if (errors.length) {
-      let listErrors = "";
-      for (const err of errors) {
-        listErrors += err.msg + ".";
-      }
-      let response = {
-        message: listErrors,
-        type: "danger"
-      };
-      res.json(response);
-    }
-    const { description, fileName, resource } = req.body;
-    const { uuidCode } = req.params;
-
-    await Storage.update(
-      { description, fileName, resource },
-      { where: { uuidCode } }
-    );
-    res.json(`Image updated`);
-  } catch (error) {
-    console.log(error);
   }
 };
 
