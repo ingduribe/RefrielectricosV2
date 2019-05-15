@@ -2,6 +2,7 @@ const productsController = {};
 const validator = require("../middlewares/productsValidations");
 const Products = require("./../model/products");
 const Categories = require("./../model/categories");
+const Storage = require("./../model/storage");
 const { Sequelize } = require("../config/db");
 const Operator = Sequelize.Op;
 

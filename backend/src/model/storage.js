@@ -18,6 +18,9 @@ Storage.init(
     nickPicture: {
       type: Sequelize.STRING
     },
+    extension: {
+      type: Sequelize.STRING
+    },
     resource: {
       type: Sequelize.TEXT,
       allowNull: false

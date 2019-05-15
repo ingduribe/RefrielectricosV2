@@ -15,7 +15,14 @@ router.put(
   storageController.changeStatus
 );
 
+router.get("/file/:idProduct", storageController.getFile);
+
 router.post("/massiveUpload", isAuth, storageController.massiveUpload);
+
+router.put(
+  "/asignProductToImage/:uuidCode",
+  storageController.asignProductToImage
+);
 
 //Endpoint to get active categories
 router.get("/", storageController.getActiveImages);

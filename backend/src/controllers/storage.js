@@ -25,6 +25,7 @@ storageController.upload = (req, res) => {
         const { file } = newImage;
         newImage.resource = file.path;
         newImage.fileName = file.name;
+        newImage.extension = path.extname(file.name);
         let updates = false;
 
         let finded = await Storage.findOne({
@@ -67,6 +68,7 @@ storageController.massiveUpload = async (req, res) => {
         newImage.resource = file.path;
         newImage.description = "Massive upload";
         newImage.inMassiveUpload = true;
+        newImage.extension = path.extname(file.name);
 
         imagesList.push(newImage);
 
@@ -148,6 +150,39 @@ storageController.getAllImages = async (req, res) => {
   try {
     const allImages = await Storage.findAll();
     res.json(allImages);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+storageController.getFile = async (req, res) => {
+  try {
+    let { idProduct } = req.params;
+    let fileInfo = await Storage.findOne({
+      attributes: ["extension", "resource", "fileName"],
+      where: { active: 1, idProduct }
+    });
+    if (!fileInfo) return res.json("No product found");
+
+    if (fs.existsSync(fileInfo.resource)) {
+      let file = fs.readFileSync(fileInfo.resource);
+      res.contentType(`image/${fileInfo.extension}`);
+      return res.end(file);
+    } else {
+      return res.status(404).json(`No resource found: ${fileInfo.fileName}`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+storageController.asignProductToImage = async (req, res) => {
+  try {
+    let { uuidCode } = req.params;
+    let { idProduct } = req.body;
+
+    await Storage.update({ idProduct }, { where: { uuidCode } });
+    return res.json("Image asigned to product");
   } catch (error) {
     console.log(error);
   }
