@@ -1,9 +1,9 @@
 import { SAVE_CATEGORY } from "../actions/types";
 
-export default function(state = [], action) {
-  switch (action.type) {
+export default function(state = [], { type, payload }) {
+  switch (type) {
     case SAVE_CATEGORY:
-      return [...state, action.payload];
+      return [...state, payload];
     default:
       return state;
   }

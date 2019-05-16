@@ -1,6 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import * as actions from "../redux/actions";
 
 class CreateCategry extends React.Component {
   state = {
@@ -47,13 +45,4 @@ class CreateCategry extends React.Component {
   }
 }
 
-const mapStateToProps = function(state) {
-  return {
-    state
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  actions
-)(CreateCategry);
+export default CreateCategry;
