@@ -3,6 +3,7 @@ import ListCategories from "./ListCategories";
 import CreateCategory from "./CreateCategory";
 import { connect } from "react-redux";
 import * as actions from "../store/actions";
+import store from "../store";
 
 class Categories extends Component {
   saveCategory = newCategory => {
@@ -10,25 +11,29 @@ class Categories extends Component {
   };
 
   render() {
+    const { categories } = this.props;
     return (
       <div>
         <CreateCategory saveCategory={this.saveCategory.bind(this)} />
-        <ListCategories />
+        <ListCategories categories={categories} />
       </div>
     );
   }
 }
 
+store.dispatch(actions.getAllCategories(dispatchEvent));
+
 const mapStateToProps = state => {
-  console.log(state);
   return {
-    state
+    categories: state.categories
   };
 };
 
 const mapDispathToProps = dispatch => {
   return {
-    createCategory: newCategory => dispatch(actions.createCategory(newCategory))
+    // createCategory: newCategory =>
+    //   dispatch(actions.createCategory(newCategory)),
+    getAllCategories: () => dispatch(actions.getAllCategories())
   };
 };
 
