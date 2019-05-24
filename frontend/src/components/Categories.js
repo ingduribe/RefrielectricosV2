@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ListCategories from "./ListCategories";
 import CreateCategory from "./CreateCategory";
 import { connect } from "react-redux";
-import * as actions from "../store/actions";
+import { categoriesActions } from "../store/actions";
 import store from "../store";
 
 class Categories extends Component {
@@ -21,7 +21,7 @@ class Categories extends Component {
   }
 }
 
-store.dispatch(actions.getAllCategories(dispatchEvent));
+store.dispatch(categoriesActions.getAllCategories(dispatchEvent));
 
 const mapStateToProps = state => {
   return {
@@ -31,9 +31,9 @@ const mapStateToProps = state => {
 
 const mapDispathToProps = dispatch => {
   return {
-    // createCategory: newCategory =>
-    //   dispatch(actions.createCategory(newCategory)),
-    getAllCategories: () => dispatch(actions.getAllCategories())
+    createCategory: newCategory =>
+      dispatch(categoriesActions.createCategory(newCategory)),
+    getAllCategories: () => dispatch(categoriesActions.getAllCategories())
   };
 };
 
