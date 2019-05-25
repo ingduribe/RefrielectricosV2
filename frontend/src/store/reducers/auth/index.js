@@ -1,10 +1,18 @@
-import { LOGIN } from "../../actions/types";
+import { SET_CURRENT_USER } from "../../actions/types";
 
-const authReducer = (state = [], { type, payload }) => {
+const initialState = {
+  isAuthenticated: false,
+  userLoged: {}
+};
+
+const authReducer = (state = initialState, { type, user }) => {
   switch (type) {
-    case LOGIN:
-      console.log(state);
-      return [...state, ...payload];
+    case SET_CURRENT_USER:
+      console.log(type, user);
+      return {
+        isAuthenticated: user ? true : false,
+        userLoged: user
+      };
 
     default:
       return [...state];
