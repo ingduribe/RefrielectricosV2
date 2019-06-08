@@ -2,20 +2,19 @@ import { SET_CURRENT_USER } from "../../actions/types";
 
 const initialState = {
   isAuthenticated: false,
-  userLoged: {}
+  auth: {}
 };
 
 const authReducer = (state = initialState, { type, user }) => {
   switch (type) {
     case SET_CURRENT_USER:
-      console.log(type, user);
       return {
         isAuthenticated: user ? true : false,
-        userLoged: user
+        auth: user
       };
 
     default:
-      return [...state];
+      return { ...state };
   }
 };
 

@@ -11,10 +11,17 @@ const setCurrentUser = user => {
   };
 };
 
+const loguot = () => {
+  return dispatch => {
+    localStorage.removeItem("token");
+    setAuthorizationToken(false);
+    dispatch(setCurrentUser());
+  };
+};
+
 const login = userLogin => async dispatch => {
   const responseAuth = await axios.post(`${keys.api}/users/signin`, userLogin);
   const { user } = responseAuth.data;
-  let actionAuth = {};
   if (user) {
     const { token } = responseAuth.data.msg;
     localStorage.setItem("token", token);
@@ -26,4 +33,4 @@ const login = userLogin => async dispatch => {
   }
 };
 
-export default { login, setCurrentUser };
+export default { login, loguot, setCurrentUser };

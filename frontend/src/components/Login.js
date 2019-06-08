@@ -1,20 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authActions } from "../store/actions";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      usernameLogin: "",
+      passwordLogin: ""
+    };
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    let user = {
-      usernameLogin: this.refs.usernameLogin.value,
-      passwordLogin: this.refs.passwordLogin.value
-    };
-    this.props.login(user);
-    this.refs.usernameLogin.value = "";
-    this.refs.passwordLogin.value = "";
+    this.props.login(this.state);
+    this.setState({
+      usernameLogin: "",
+      passwordLogin: ""
+    });
   };
 
   render() {
+    const { isAuthenticated } = this.props.users;
+
+    if (isAuthenticated) return <Redirect to="/categories" />;
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
         <fieldset>
@@ -22,11 +38,17 @@ class Login extends Component {
           <input
             type="text"
             placeholder="Username"
+            name="usernameLogin"
             autoFocus
-            ref={"usernameLogin"}
+            onChange={this.handleChange}
           />
           <br />
-          <input type="password" placeholder="Password" ref={"passwordLogin"} />
+          <input
+            type="password"
+            placeholder="Password"
+            name="passwordLogin"
+            onChange={this.handleChange}
+          />
           <br />
           <input type="submit" value="Sign In" />
         </fieldset>
@@ -37,7 +59,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    users: state.users
   };
 };
 

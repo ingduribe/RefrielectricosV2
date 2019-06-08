@@ -1,29 +1,26 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import setAuthorizationToken from "./utils/setAuthorizationToken";
-
 import { authActions } from "./store/actions";
-
-import NavbarHome from "./components/NavbarHome";
-import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Login from "./components/Login";
-import Register from "./components/Register";
-import Categories from "./components/Categories";
+import Users from "./components/users/Users";
+import Categories from "./components/categories/Categories";
 import store from "./store";
 import jwt from "jsonwebtoken";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
-          <NavbarHome />
-          <Categories />
-
+        <div>
+          <Navbar />
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/signin" component={Login} />
-            <Route exact path="/signup" component={Register} />
+            <Route path="/signin" component={Login} />
+            <Route path="/users" component={Users} />
+            <Route path="/categories" component={Categories} />
           </Switch>
         </div>
       </BrowserRouter>
@@ -32,17 +29,23 @@ class App extends Component {
 }
 
 if (localStorage.token) {
-  setAuthorizationToken(localStorage.token);
-  store.dispatch(authActions.setCurrentUser(jwt.decode(localStorage.token)));
+  console.log("Aqui esta");
+  const token = localStorage.token;
+  setAuthorizationToken(token);
+  const userInfo = jwt.decode(token);
+  const { username, rol } = userInfo;
+  const user = { username, rol };
+  store.dispatch(authActions.setCurrentUser(user));
 }
 
-const mapDispathToProps = dispatch => {
+App.propTypes = {
+  users: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
   return {
-    setCurrentUser: () =>
-      dispatch(authActions.setCurrentUser(jwt.decode(localStorage.token)))
+    users: state.users
   };
 };
-export default connect(
-  null,
-  null
-)(App);
+
+export default connect(mapStateToProps)(App);

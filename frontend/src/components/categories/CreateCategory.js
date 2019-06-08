@@ -2,8 +2,8 @@ import React from "react";
 
 class CreateCategry extends React.Component {
   state = {
-    categoryName: "",
-    categoryDescription: ""
+    name: "",
+    description: ""
   };
 
   handleChange = e => {
@@ -15,7 +15,7 @@ class CreateCategry extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.saveCategory(this.state);
-    this.setState({ categoryName: "", categoryDescription: "" });
+    this.setState({ name: "", description: "" });
   };
 
   render() {
@@ -25,7 +25,7 @@ class CreateCategry extends React.Component {
           <legend>Create category</legend>
           <input
             type="text"
-            name="categoryName"
+            name="name"
             placeholder="Category name"
             autoFocus
             onChange={this.handleChange}
@@ -33,7 +33,7 @@ class CreateCategry extends React.Component {
           <br />
           <input
             type="text"
-            name="categoryDescription"
+            name="description"
             placeholder="Category description"
             onChange={this.handleChange}
           />

@@ -22,8 +22,8 @@ categoriesController.addCategory = async (req, res) => {
       name,
       description
     };
-    await Categories.create(newCategory);
-    res.json("Created");
+    const categoryCreated = await Categories.create(newCategory);
+    res.json(categoryCreated);
   } catch (err) {
     console.log(err);
   }

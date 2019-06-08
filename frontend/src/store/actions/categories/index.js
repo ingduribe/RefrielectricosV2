@@ -2,21 +2,28 @@ import axios from "axios";
 import { SAVE_CATEGORY, GET_CATEGORIES } from "../types";
 import keys from "../../../keys/";
 
-const createCategory = category => {
+const getCategories = categories => {
+  return {
+    type: GET_CATEGORIES,
+    payload: categories
+  };
+};
+
+const saveCategory = newCategory => {
   return {
     type: SAVE_CATEGORY,
-    payload: category
+    payload: newCategory
   };
 };
 
-const getAllCategories = () => async dispatch => {
-  const categories = await axios.get(`${keys.api}/categories`);
-
-  let actionGetCategories = {
-    type: GET_CATEGORIES,
-    payload: categories.data
-  };
-  return dispatch(actionGetCategories);
+const createCategory = category => async dispatch => {
+  const categoryCreated = await axios.post(`${keys.api}/categories`, category);
+  return dispatch(saveCategory(categoryCreated));
 };
 
-export default { createCategory, getAllCategories };
+const getActiveCategories = () => async dispatch => {
+  const categories = await axios.get(`${keys.api}/categories/all`);
+  return dispatch(getCategories(categories.data));
+};
+
+export default { createCategory, getActiveCategories };

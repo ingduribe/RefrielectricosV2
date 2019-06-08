@@ -8,6 +8,7 @@ const categoriesList = ({ categories } = this.props) => {
           <th>Category</th>
           <th>category description</th>
           <th>Last Updated</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -16,6 +17,7 @@ const categoriesList = ({ categories } = this.props) => {
             <td>{category.name}</td>
             <td>{category.description}</td>
             <td>{category.updatedAt}</td>
+            <td>{category.active ? <i>Active</i> : <i>Inactive</i>}</td>
           </tr>
         ))}
       </tbody>

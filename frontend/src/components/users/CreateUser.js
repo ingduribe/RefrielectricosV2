@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../store/actions";
-import store from "../store";
+import { Redirect } from "react-router-dom";
 
-class Register extends Component {
+class CreateUser extends Component {
   render() {
+    const { isAuthenticated } = this.props.users;
+    if (!isAuthenticated) return <Redirect to="/signin" />;
+
     return (
       <form onSubmit={this.handleSubmit}>
         <fieldset>
-          <legend>Sign Up System</legend>
+          <legend>Create new admin user</legend>
           <input
             type="text"
             name="categoryName"
@@ -49,7 +51,13 @@ const mapDispathToProps = dispatch => {
   return {};
 };
 
+const mapStateToProps = state => {
+  return {
+    users: state.users
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispathToProps
-)(Register);
+)(CreateUser);
