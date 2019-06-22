@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Login from "./components/Login";
 import Users from "./components/users/Users";
+import Products from "./components/products/Products";
 import Categories from "./components/categories/Categories";
 import store from "./store";
 import jwt from "jsonwebtoken";
@@ -21,6 +22,7 @@ class App extends Component {
             <Route path="/signin" component={Login} />
             <Route path="/users" component={Users} />
             <Route path="/categories" component={Categories} />
+            <Route path="/products" component={Products} />
           </Switch>
         </div>
       </BrowserRouter>
@@ -29,7 +31,6 @@ class App extends Component {
 }
 
 if (localStorage.token) {
-  console.log("Aqui esta");
   const token = localStorage.token;
   setAuthorizationToken(token);
   const userInfo = jwt.decode(token);

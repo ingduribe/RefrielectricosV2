@@ -24,13 +24,13 @@ router.put(
   storageController.asignProductToImage
 );
 
-//Endpoint to get active categories
 router.get("/", storageController.getActiveImages);
 
-//Endpoint to get inactive categories
 router.get("/inactive", isAuth, storageController.getInactiveImages);
 
-//Endpoint to get all categories
 router.get("/all", isAuth, storageController.getAllImages);
+
+//Endpoint to get source by id
+router.get("/:idProduct", isAuth, storageController.getFileInformation);
 
 module.exports = router;

@@ -26,4 +26,12 @@ const getActiveCategories = () => async dispatch => {
   return dispatch(getCategories(categories.data));
 };
 
-export default { createCategory, getActiveCategories };
+const changeStatus = (status, id) => async dispatch => {
+  await axios.put(`${keys.api}/categories/changeStatus/${id}`, {
+    status
+  });
+  const categories = await axios.get(`${keys.api}/categories/all`);
+  return dispatch(getCategories(categories.data));
+};
+
+export default { createCategory, getActiveCategories, changeStatus };

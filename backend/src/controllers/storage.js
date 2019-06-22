@@ -158,19 +158,32 @@ storageController.getAllImages = async (req, res) => {
 storageController.getFile = async (req, res) => {
   try {
     let { idProduct } = req.params;
-    let fileInfo = await Storage.findOne({
-      attributes: ["extension", "resource", "fileName"],
+    let file = await Storage.findOne({
+      attributes: ["resource"],
       where: { active: 1, idProduct }
     });
-    if (!fileInfo) return res.json("No product found");
+    if (!file) return res.json(false);
 
-    if (fs.existsSync(fileInfo.resource)) {
-      let file = fs.readFileSync(fileInfo.resource);
-      res.contentType(`image/${fileInfo.extension}`);
+    if (fs.existsSync(file.resource)) {
+      file = fs.readFileSync(file.resource);
+      res.contentType(`image/${file.extension}`);
       return res.end(file);
     } else {
-      return res.status(404).json(`No resource found: ${fileInfo.fileName}`);
+      return res.status(404).json(`No resource found: ${file.fileName}`);
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+storageController.getFileInformation = async (req, res) => {
+  try {
+    let { idProduct } = req.params;
+    let fileInfo = await Storage.findOne({
+      attributes: ["extension", "fileName", "description"],
+      where: { active: 1, idProduct }
+    });
+    res.json(fileInfo);
   } catch (error) {
     console.log(error);
   }

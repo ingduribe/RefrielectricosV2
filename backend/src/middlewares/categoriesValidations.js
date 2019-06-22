@@ -16,7 +16,7 @@ const createValidator = check => {
 
 const changeStatusValidator = check => {
   return [
-    check("active")
+    check("status")
       .not()
       .isEmpty()
       .withMessage("Category status is required")

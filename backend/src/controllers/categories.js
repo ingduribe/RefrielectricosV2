@@ -15,7 +15,7 @@ categoriesController.addCategory = async (req, res) => {
         message: listErrors,
         type: "danger"
       };
-      res.json(response);
+      return res.json(response);
     }
     const { name, description } = req.body;
     const newCategory = {
@@ -42,12 +42,12 @@ categoriesController.changeStatus = async (req, res) => {
         message: listErrors,
         type: "danger"
       };
-      res.json(response);
+      return res.json(response);
     }
-    const { active } = req.body;
+    const { status } = req.body;
     const { id } = req.params;
 
-    await Categories.update({ active }, { where: { id } });
+    await Categories.update({ active: !status }, { where: { id } });
     res.json(`Status changed`);
   } catch (err) {
     console.log(err);

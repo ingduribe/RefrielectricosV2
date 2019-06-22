@@ -1,3 +1,11 @@
+//Categories actions
 export const SAVE_CATEGORY = "save_category";
 export const GET_CATEGORIES = "get_categories";
+export const CHANGE_STATUS_CATEGORY = "change_status_category";
+
+//Users Actions
 export const SET_CURRENT_USER = "set_current_user";
+
+//Products actions
+export const GET_PRODUCTS = "get_products";
+export const GET_PRODUCT_IMAGE = "get_product_image";
