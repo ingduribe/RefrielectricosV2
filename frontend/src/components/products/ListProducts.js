@@ -1,26 +1,30 @@
 import React from "react";
+import Grid from "@material-ui/core/Grid";
 
 const ListProducts = ({ products } = this.props) => {
   return (
-    <section>
+    <Grid container spacing={8}>
       {products.map((product, i) => {
         return (
-          <div key={i}>
-            <h4>{product.name}</h4>
-            <i>
-              {product.description}
-              <b>{" " + product.brand}</b>
-            </i>
-            <br />
-            {product.image ? (
-              <img width={300} src={product.image} alt={product.description} />
-            ) : (
-              <b>Not image for product yet</b>
-            )}
-          </div>
+          <Grid item key={i}>
+            <div>
+              <h4>{product.name}</h4>
+              <i>{product.brand}</i>
+              <br />
+              {product.image ? (
+                <img
+                  width={300}
+                  src={product.image}
+                  alt={product.description}
+                />
+              ) : (
+                <b>Not image for product yet</b>
+              )}
+            </div>
+          </Grid>
         );
       })}
-    </section>
+    </Grid>
   );
 };
 

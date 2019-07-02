@@ -7,24 +7,27 @@ import Login from "./components/Login";
 import Users from "./components/users/Users";
 import Products from "./components/products/Products";
 import Categories from "./components/categories/Categories";
+import Storage from "./components/storage/Storage";
 import store from "./store";
 import jwt from "jsonwebtoken";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Container from "@material-ui/core/Container";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <Container>
           <Navbar />
           <Switch>
             <Route path="/signin" component={Login} />
             <Route path="/users" component={Users} />
             <Route path="/categories" component={Categories} />
             <Route path="/products" component={Products} />
+            <Route path="/storage" component={Storage} />
           </Switch>
-        </div>
+        </Container>
       </BrowserRouter>
     );
   }

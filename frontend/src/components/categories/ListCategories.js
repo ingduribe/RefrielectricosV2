@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 export class categoriesList extends React.Component {
   changeCategoryStatus = (status, id) => {
@@ -24,7 +25,7 @@ export class categoriesList extends React.Component {
               <tr key={i}>
                 <td>{category.name}</td>
                 <td>{category.description}</td>
-                <td>{category.updatedAt}</td>
+                <td>{moment(category.updatedAt).format("llll")}</td>
                 <td>{category.active ? <i>Active</i> : <i>Inactive</i>}</td>
                 <td>
                   <button

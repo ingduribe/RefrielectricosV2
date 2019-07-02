@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { authActions } from "../store/actions";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import MenuItem from "@material-ui/core/MenuItem";
 
 class Navbar extends React.Component {
   logout = e => {
@@ -13,44 +16,33 @@ class Navbar extends React.Component {
     const { isAuthenticated } = this.props.users;
 
     const isAuthLinks = (
-      <ul>
-        <li>
-          <NavLink exact to="/signin" onClick={this.logout.bind(this)}>
-            Logout
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/users">
-            Users
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/categories">
-            Categories
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/products">
-            Products
-          </NavLink>
-        </li>
-      </ul>
+      <MenuItem>
+        <NavLink to="/signin" onClick={this.logout.bind(this)}>
+          Logout
+        </NavLink>
+        <NavLink to="/users">Users</NavLink>
+        <NavLink to="/categories">Categories</NavLink>
+        <NavLink to="/products">Products</NavLink>
+        <NavLink to="/storage">Storage</NavLink>
+      </MenuItem>
     );
 
     const isNotAuthLinks = (
-      <ul>
-        <li>
-          <NavLink exact to="/signin">
-            Sign In
-          </NavLink>
-        </li>
-      </ul>
+      <MenuItem>
+        <NavLink exact to="/signin">
+          Sign In
+        </NavLink>
+      </MenuItem>
     );
 
     return (
-      <nav>
-        <div>{isAuthenticated ? isAuthLinks : isNotAuthLinks}</div>
-      </nav>
+      <AppBar color="default" position="static">
+        <Toolbar>
+          <MenuItem>Refri - Admin</MenuItem>
+
+          {isAuthenticated ? isAuthLinks : isNotAuthLinks}
+        </Toolbar>
+      </AppBar>
     );
   }
 }
