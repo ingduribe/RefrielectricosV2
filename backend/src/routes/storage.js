@@ -15,7 +15,9 @@ router.put(
   storageController.changeStatus
 );
 
-router.get("/file/:idProduct", storageController.getFile);
+router.get("/file/:idProduct", storageController.getFileByProduct);
+
+router.get("/file/uuid/:uuidCode", storageController.getFileByUuidCode);
 
 router.post("/massiveUpload", isAuth, storageController.massiveUpload);
 

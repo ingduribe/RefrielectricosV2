@@ -119,6 +119,8 @@ storageController.changeStatus = async (req, res) => {
     const { active } = req.body;
     const { uuidCode } = req.params;
 
+    console.log(active, uuidCode);
+
     await Storage.update({ active }, { where: { uuidCode } });
     res.json(`Status changed`);
   } catch (err) {
@@ -155,12 +157,33 @@ storageController.getAllImages = async (req, res) => {
   }
 };
 
-storageController.getFile = async (req, res) => {
+storageController.getFileByProduct = async (req, res) => {
   try {
     let { idProduct } = req.params;
     let file = await Storage.findOne({
       attributes: ["resource"],
-      where: { active: 1, idProduct }
+      where: { idProduct }
+    });
+    if (!file) return res.json(false);
+
+    if (fs.existsSync(file.resource)) {
+      file = fs.readFileSync(file.resource);
+      res.contentType(`image/${file.extension}`);
+      return res.end(file);
+    } else {
+      return res.status(404).json(`No resource found: ${file.fileName}`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+storageController.getFileByUuidCode = async (req, res) => {
+  try {
+    let { uuidCode } = req.params;
+    let file = await Storage.findOne({
+      attributes: ["resource"],
+      where: { uuidCode }
     });
     if (!file) return res.json(false);
 
