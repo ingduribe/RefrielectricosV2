@@ -1,5 +1,4 @@
 import { GET_STORAGE, CHANGE_STATUS_SOURCE } from "../../actions/types";
-import { stat } from "fs";
 
 const storageReducer = (state = [], { type, payload = {} }) => {
   switch (type) {

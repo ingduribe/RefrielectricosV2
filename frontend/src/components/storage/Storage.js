@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { storageActions } from "../../store/actions";
 import ListStorage from "./ListStorage";
+import { Container } from "semantic-ui-react";
 
 class Storage extends Component {
   componentDidMount() {
@@ -20,13 +21,12 @@ class Storage extends Component {
     if (!isAuthenticated) return <Redirect to="/signin" />;
 
     return (
-      <div>
+      <Container>
         <ListStorage
           storage={storage}
           changeSourceStatus={this.changeSourceStatus.bind(this)}
         />
-        <hr />
-      </div>
+      </Container>
     );
   }
 }

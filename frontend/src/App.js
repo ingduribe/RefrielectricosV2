@@ -12,13 +12,12 @@ import store from "./store";
 import jwt from "jsonwebtoken";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Container from "@material-ui/core/Container";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Container>
+        <div>
           <Navbar />
           <Switch>
             <Route path="/signin" component={Login} />
@@ -27,7 +26,7 @@ class App extends Component {
             <Route path="/products" component={Products} />
             <Route path="/storage" component={Storage} />
           </Switch>
-        </Container>
+        </div>
       </BrowserRouter>
     );
   }

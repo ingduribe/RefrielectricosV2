@@ -9,6 +9,7 @@ export const SET_CURRENT_USER = "set_current_user";
 //Products actions
 export const GET_PRODUCTS = "get_products";
 export const GET_PRODUCT_IMAGE = "get_product_image";
+export const CHANGE_STATUS_PRODUCT = "change_status_product";
 
 //Storage Actions
 export const GET_STORAGE = "get_storage";

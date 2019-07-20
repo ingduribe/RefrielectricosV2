@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
+import { Grid, Image, Icon } from "semantic-ui-react";
 
 export class ListStorage extends React.Component {
   changeSourceStatus = (status, uuidCode) => {
@@ -9,32 +9,29 @@ export class ListStorage extends React.Component {
   render() {
     const { storage } = this.props;
     return (
-      <Grid container spacing={8}>
-        {storage.map((source, i) => {
-          return (
-            <Grid item key={i}>
-              <i>{source.active}</i>
-              <br />
-              <figure>
-                <img width={300} src={source.image} alt={source.description} />
+      <Grid columns={3}>
+        <Grid.Row>
+          {storage.map((source, i) => {
+            return (
+              <Grid.Column key={i}>
+                <Image src={source.image} as="a" size="medium" />
                 <details>
-                  <summary>Details</summary>
+                  <summary>
+                    <Icon className="ellipsis horizontal" />
+                  </summary>
                   <figcaption>{source.fileName}</figcaption>
-                  <b>
-                    {source.active ? <i>Active</i> : <i>Inactive</i>}
-                    <button
-                      onClick={() => {
-                        this.changeSourceStatus(source.active, source.uuidCode);
-                      }}
-                    >
-                      Change status
-                    </button>
-                  </b>
+                  {source.active ? <i>Active </i> : <i>Inactive </i>}
+                  <Icon
+                    className="sync alternate"
+                    onClick={() => {
+                      this.changeSourceStatus(source.active, source.uuidCode);
+                    }}
+                  />
                 </details>
-              </figure>
-            </Grid>
-          );
-        })}
+              </Grid.Column>
+            );
+          })}
+        </Grid.Row>
       </Grid>
     );
   }

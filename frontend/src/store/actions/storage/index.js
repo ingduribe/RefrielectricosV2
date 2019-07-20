@@ -30,7 +30,6 @@ const getAllStorage = () => async dispatch => {
 };
 
 const changeStatus = (status, uuidCode) => async dispatch => {
-  console.log(status);
   let response = await axios.put(
     `${keys.api}/storage/changeStatus/${uuidCode}`,
     {

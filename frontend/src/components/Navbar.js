@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { authActions } from "../store/actions";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import MenuItem from "@material-ui/core/MenuItem";
+import { Header, Icon, Menu } from "semantic-ui-react";
 
 class Navbar extends React.Component {
   logout = e => {
@@ -16,33 +14,46 @@ class Navbar extends React.Component {
     const { isAuthenticated } = this.props.users;
 
     const isAuthLinks = (
-      <MenuItem>
-        <NavLink to="/signin" onClick={this.logout.bind(this)}>
-          Logout
-        </NavLink>
-        <NavLink to="/users">Users</NavLink>
-        <NavLink to="/categories">Categories</NavLink>
-        <NavLink to="/products">Products</NavLink>
-        <NavLink to="/storage">Storage</NavLink>
-      </MenuItem>
+      <Menu>
+        <Menu.Item>
+          <NavLink to="/signin" onClick={this.logout.bind(this)}>
+            Logout
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink to="/users">Users</NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink to="/categories">Categories</NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink to="/products">Products</NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink to="/storage">Storage</NavLink>
+        </Menu.Item>
+      </Menu>
     );
 
     const isNotAuthLinks = (
-      <MenuItem>
-        <NavLink exact to="/signin">
-          Sign In
-        </NavLink>
-      </MenuItem>
+      <Menu>
+        <Menu.Item>
+          <NavLink exact to="/signin">
+            Sign In
+          </NavLink>
+        </Menu.Item>
+      </Menu>
     );
 
     return (
-      <AppBar color="default" position="static">
-        <Toolbar>
-          <MenuItem>Refri - Admin</MenuItem>
-
-          {isAuthenticated ? isAuthLinks : isNotAuthLinks}
-        </Toolbar>
-      </AppBar>
+      <Header as="h2">
+        <Icon name="settings" />
+        <Header.Content>
+          RefriElectricos
+          <Header.Subheader>Mannage your data</Header.Subheader>
+        </Header.Content>
+        {isAuthenticated ? isAuthLinks : isNotAuthLinks}
+      </Header>
     );
   }
 }

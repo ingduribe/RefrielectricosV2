@@ -2,13 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authActions } from "../store/actions";
 import { Redirect } from "react-router-dom";
+import {
+  Button,
+  Form,
+  Header,
+  Container,
+  Dimmer,
+  Loader
+} from "semantic-ui-react";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       usernameLogin: "",
-      passwordLogin: ""
+      passwordLogin: "",
+      isLoading: false
     };
   }
 
@@ -18,41 +27,55 @@ class Login extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    this.props.login(this.state);
+    this.setState({
+      isLoading: true
+    });
+    await this.props.login(this.state);
+
     this.setState({
       usernameLogin: "",
-      passwordLogin: ""
+      passwordLogin: "",
+      isLoading: false
     });
   };
 
   render() {
     const { isAuthenticated } = this.props.users;
+    const { usernameLogin, passwordLogin } = this.state;
 
     if (isAuthenticated) return <Redirect to="/categories" />;
+
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <fieldset>
-          <legend>Login System</legend>
-          <input
+      <Container>
+        <Form onSubmit={this.handleSubmit.bind(this)}>
+          <Header as="h4">Login System</Header>
+          <Form.Input
             type="text"
             placeholder="Username"
             name="usernameLogin"
             autoFocus
+            value={usernameLogin}
             onChange={this.handleChange}
+            required
           />
           <br />
-          <input
+          <Form.Input
             type="password"
             placeholder="Password"
             name="passwordLogin"
+            value={passwordLogin}
             onChange={this.handleChange}
+            required
           />
           <br />
-          <input type="submit" value="Sign In" />
-        </fieldset>
-      </form>
+          <Button type="submit">Login</Button>
+        </Form>
+        <Dimmer active={this.state.isLoading}>
+          <Loader />
+        </Dimmer>
+      </Container>
     );
   }
 }

@@ -31,6 +31,7 @@ const login = userLogin => async dispatch => {
     const user = { username, rol };
     return dispatch(setCurrentUser(user));
   }
+  return false;
 };
 
 export default { login, loguot, setCurrentUser };

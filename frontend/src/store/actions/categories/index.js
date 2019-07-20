@@ -16,13 +16,17 @@ const saveCategory = newCategory => {
   };
 };
 
+let abortController = new window.AbortController();
+
 const createCategory = category => async dispatch => {
   const categoryCreated = await axios.post(`${keys.api}/categories`, category);
   return dispatch(saveCategory(categoryCreated));
 };
 
 const getActiveCategories = () => async dispatch => {
-  const categories = await axios.get(`${keys.api}/categories/all`);
+  const categories = await axios.get(`${keys.api}/categories/all`, {
+    signal: abortController.signal
+  });
   return dispatch(getCategories(categories.data));
 };
 

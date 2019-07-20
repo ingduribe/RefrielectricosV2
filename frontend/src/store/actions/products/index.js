@@ -1,11 +1,18 @@
 import axios from "axios";
-import { GET_PRODUCTS } from "../types";
+import { GET_PRODUCTS, CHANGE_STATUS_PRODUCT } from "../types";
 import keys from "../../../keys/";
 
 const getProducts = products => {
   return {
     type: GET_PRODUCTS,
     payload: products
+  };
+};
+
+const changeProductStatus = productUpdated => {
+  return {
+    type: CHANGE_STATUS_PRODUCT,
+    payload: productUpdated
   };
 };
 
@@ -28,4 +35,13 @@ const getAllProducts = () => async dispatch => {
   return dispatch(getProducts(products.data));
 };
 
-export default { getAllProducts };
+const changeStatus = (status, id) => async dispatch => {
+  let response = await axios.put(`${keys.api}/products/changeStatus/${id}`, {
+    active: !status
+  });
+
+  if (response.data === "Status changed")
+    return dispatch(changeProductStatus({ id, status }));
+};
+
+export default { getAllProducts, changeStatus };

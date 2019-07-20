@@ -1,31 +1,91 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
+import {
+  Grid,
+  Image,
+  Icon,
+  Modal,
+  Button,
+  Item,
+  Card
+} from "semantic-ui-react";
 
-const ListProducts = ({ products } = this.props) => {
-  return (
-    <Grid container spacing={8}>
-      {products.map((product, i) => {
-        return (
-          <Grid item key={i}>
-            <div>
-              <h4>{product.name}</h4>
-              <i>{product.brand}</i>
-              <br />
-              {product.image ? (
-                <img
-                  width={300}
-                  src={product.image}
-                  alt={product.description}
-                />
-              ) : (
-                <b>Not image for product yet</b>
-              )}
-            </div>
-          </Grid>
-        );
-      })}
-    </Grid>
-  );
-};
+export class ListProducts extends React.Component {
+  changeProductStatus = (status, id) => {
+    this.props.changeProductStatus(status, id);
+  };
+
+  render() {
+    const { products, storage } = this.props;
+
+    const listStorage = storage.map((source, i) => {
+      return (
+        <Item key={i}>
+          <Item.Image size="tiny" src={source.image} />
+
+          <Item.Content>
+            <Item.Header as="h4">{source.fileName}</Item.Header>
+            <Item.Description>
+              {source.active ? <i>Active </i> : <i>Inactive </i>}
+              <Button animated="vertical">
+                <Button.Content hidden>Choose</Button.Content>
+                <Button.Content visible>
+                  <Icon name="hand point left" />
+                </Button.Content>
+              </Button>
+            </Item.Description>
+            <Item.Extra>{source.description}</Item.Extra>
+          </Item.Content>
+        </Item>
+      );
+    });
+
+    return (
+      <Grid columns={3} stackable centered>
+        <Grid.Row>
+          {products.map((product, i) => {
+            return (
+              <Grid.Column key={i}>
+                <Card>
+                  {product.image ? (
+                    <Image src={product.image} as="a" size="medium" />
+                  ) : (
+                    <Modal trigger={<Button>Choose image</Button>}>
+                      <Modal.Header>Choose product image</Modal.Header>
+                      <Modal.Content image scrolling>
+                        <Modal.Description>
+                          <Item.Group>{listStorage}</Item.Group>
+                        </Modal.Description>
+                      </Modal.Content>
+                    </Modal>
+                  )}
+                  <Card.Content>
+                    <Card.Header>{product.name}</Card.Header>
+                    <Card.Meta>
+                      <span>{product.brand}</span>
+                    </Card.Meta>
+                    <Card.Content extra>
+                      <b>
+                        <Icon
+                          className="sync alternate"
+                          onClick={() => {
+                            this.changeProductStatus(
+                              product.active,
+                              product.id
+                            );
+                          }}
+                        />
+                        {product.active ? <i>Active </i> : <i>Inactive </i>}
+                      </b>
+                    </Card.Content>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            );
+          })}
+        </Grid.Row>
+      </Grid>
+    );
+  }
+}
 
 export default ListProducts;
