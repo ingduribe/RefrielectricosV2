@@ -20,4 +20,6 @@ const Storage = require("./storage");
   await Storage.sync();
   await Users.sync();
   await rolesManager.sync();
+
+  console.log("Database Sync done!");
 })();

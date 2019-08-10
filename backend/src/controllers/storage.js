@@ -203,8 +203,7 @@ storageController.getFileInformation = async (req, res) => {
   try {
     let { idProduct } = req.params;
     let fileInfo = await Storage.findOne({
-      attributes: ["extension", "fileName", "description"],
-      where: { active: 1, idProduct }
+      where: { idProduct }
     });
     res.json(fileInfo);
   } catch (error) {

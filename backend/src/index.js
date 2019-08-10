@@ -23,7 +23,7 @@ for (let envVar of requiredEnv) {
   try {
     await sequelize.authenticate();
 
-    console.log("Connection has been established successfully.");
+    console.log("Conected to database");
     require("./server");
   } catch (error) {
     console.error(error);

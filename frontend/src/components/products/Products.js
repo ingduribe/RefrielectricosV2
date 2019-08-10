@@ -15,6 +15,10 @@ class Products extends Component {
     this.props.changeProductsStatus(status, uuidCode);
   };
 
+  asignImageToProduct = (productId, sourceUuidCode, image) => {
+    this.props.assignImageToProduct(productId, sourceUuidCode, image);
+  };
+
   render() {
     const { isAuthenticated } = this.props.users;
     const { products, storage } = this.props;
@@ -27,6 +31,7 @@ class Products extends Component {
           products={products}
           storage={storage}
           changeProductStatus={this.changeProductStatus.bind(this)}
+          asignImageToProduct={this.asignImageToProduct.bind(this)}
         />
       </Container>
     );
@@ -46,6 +51,10 @@ const mapDispatchToProps = dispatch => {
     getAllProducts: () => dispatch(productsActions.getAllProducts()),
     changeProductsStatus: (status, id) =>
       dispatch(productsActions.changeStatus(status, id)),
+    assignImageToProduct: (productId, sourceUuidCode, image) =>
+      dispatch(
+        productsActions.assignImageToProduct(productId, sourceUuidCode, image)
+      ),
     getAllStorage: () => dispatch(storageActions.getAllStorage())
   };
 };

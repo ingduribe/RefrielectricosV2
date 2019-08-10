@@ -94,6 +94,16 @@ productsController.getActiveProduct = async (req, res) => {
   }
 };
 
+productsController.getProductById = async (req, res) => {
+  try {
+    const id = req.params.idProduct;
+    const product = await Products.findByPk(id);
+    res.json(product);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 productsController.getInactiveProduct = async (req, res) => {
   try {
     const inactiveProducts = await Products.findAll({
@@ -107,6 +117,7 @@ productsController.getInactiveProduct = async (req, res) => {
 
 productsController.getAllProduct = async (req, res) => {
   try {
+    console.log("aca llego");
     const allProducts = await Products.findAll();
     res.json(allProducts);
   } catch (error) {

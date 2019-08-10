@@ -14,30 +14,12 @@ export class ListProducts extends React.Component {
     this.props.changeProductStatus(status, id);
   };
 
+  asignImageToProduct = (productId, sourceUuidCode, image) => {
+    this.props.asignImageToProduct(productId, sourceUuidCode, image);
+  };
+
   render() {
     const { products, storage } = this.props;
-
-    const listStorage = storage.map((source, i) => {
-      return (
-        <Item key={i}>
-          <Item.Image size="tiny" src={source.image} />
-
-          <Item.Content>
-            <Item.Header as="h4">{source.fileName}</Item.Header>
-            <Item.Description>
-              {source.active ? <i>Active </i> : <i>Inactive </i>}
-              <Button animated="vertical">
-                <Button.Content hidden>Choose</Button.Content>
-                <Button.Content visible>
-                  <Icon name="hand point left" />
-                </Button.Content>
-              </Button>
-            </Item.Description>
-            <Item.Extra>{source.description}</Item.Extra>
-          </Item.Content>
-        </Item>
-      );
-    });
 
     return (
       <Grid columns={3} stackable centered>
@@ -53,7 +35,54 @@ export class ListProducts extends React.Component {
                       <Modal.Header>Choose product image</Modal.Header>
                       <Modal.Content image scrolling>
                         <Modal.Description>
-                          <Item.Group>{listStorage}</Item.Group>
+                          <Item.Group>
+                            {storage.map((source, i) => {
+                              return (
+                                <Item key={i}>
+                                  <Item.Image size="tiny" src={source.image} />
+
+                                  <Item.Content>
+                                    <Item.Header as="h4">
+                                      {source.fileName}
+                                    </Item.Header>
+                                    <Item.Description>
+                                      {source.active ? (
+                                        <i>Active </i>
+                                      ) : (
+                                        <i>Inactive </i>
+                                      )}
+                                      <Button
+                                        animated="vertical"
+                                        onClick={() => {
+                                          this.asignImageToProduct(
+                                            product.id,
+                                            source.uuidCode,
+                                            source.image
+                                          );
+                                        }}
+                                      >
+                                        <Button.Content
+                                          onClick={() => {
+                                            source;
+                                          }}
+                                          hidden
+                                        >
+                                          Choose
+                                        </Button.Content>
+                                        <Button.Content visible>
+                                          <Icon name="hand point left" />
+                                        </Button.Content>
+                                      </Button>
+                                    </Item.Description>
+                                    <Item.Extra>
+                                      {source.description}
+                                    </Item.Extra>
+                                  </Item.Content>
+                                </Item>
+                              );
+                            })}
+                            ;
+                          </Item.Group>
                         </Modal.Description>
                       </Modal.Content>
                     </Modal>

@@ -20,6 +20,8 @@ router.put(
 
 router.get("/", productsController.getActiveProduct);
 
+router.get("/one/:idProduct", productsController.getProductById);
+
 router.get("/inactive", isAuth, productsController.getInactiveProduct);
 
 router.get("/all", isAuth, productsController.getAllProduct);
